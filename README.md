@@ -1,2 +1,2 @@
-# stage0_template_vue_utils
+# Merge Template
 Stage0 Merge template for Vue_Vuetify utils.
