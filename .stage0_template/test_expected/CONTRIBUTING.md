@@ -12,7 +12,7 @@ Thank you for contributing to mentorhub_spa_utils! This guide will help you get 
 
 ```bash
 # Install dependencies
-npm install
+npm install --dev
 
 # Build
 npm run build

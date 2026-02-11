@@ -12,7 +12,7 @@ Thank you for contributing to {{info.slug}}_spa_utils! This guide will help you 
 
 ```bash
 # Install dependencies
-npm install
+npm install --dev
 
 # Build
 npm run build
