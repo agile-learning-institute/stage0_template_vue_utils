@@ -1,8 +1,8 @@
 {
-  "name": "@agile-learning-institute/spa_utils",
+  "name": "@agile-learning-institute/mentorhub_spa_utils",
   "version": "0.2.0",
   "type": "module",
-  "description": "Reusable Vue 3 + Vuetify components, composables, and utilities for Mentor Hub SPAs",
+  "description": "Reusable Vue 3 + Vuetify components, composables, and utilities",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -71,7 +71,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/agile-learning-institute/spa_utils.git"
+    "url": "https://github.com/agile-learning-institute/mentorhub_spa_utils.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"

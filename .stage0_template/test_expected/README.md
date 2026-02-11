@@ -13,7 +13,7 @@ When working on both `spa_utils` and a consuming project simultaneously:
 ```json
 {
   "dependencies": {
-    "@agile-learning-institute/mentorhub_spa_utils": "file:../spa_utils"
+    "@https://github.com/spa_utils": "file:../spa_utils"
   }
 }
 ```
@@ -23,7 +23,7 @@ When working on both `spa_utils` and a consuming project simultaneously:
 ```json
 {
   "dependencies": {
-    "@agile-learning-institute/mentorhub_spa_utils": "github:agile-learning-institute/spa_utils#v0.1.0"
+    "@https://github.com/spa_utils": "github:https://github.com/spa_utils#v0.1.0"
   }
 }
 ```
@@ -33,7 +33,7 @@ When working on both `spa_utils` and a consuming project simultaneously:
 Create `.npmrc` in your project root:
 
 ```
-@agile-learning-institute:registry=https://npm.pkg.github.com
+@https://github.com:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 
@@ -59,7 +59,7 @@ Generic list page pattern with search support, data fetching, error handling, an
 
 **Source:** [src/composables/useResourceList.ts](./src/composables/useResourceList.ts)  
 **Tests:** [tests/composables/useResourceList.test.ts](./tests/composables/useResourceList.test.ts)  
-**Example:** See [template_vue_vuetify CreatesListPage](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/pages/CreatesListPage.vue) for real-world usage
+**Example:** See [template_vue_vuetify CreatesListPage](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/pages/CreatesListPage.vue) for real-world usage
 
 **Features:**
 - Automatic search debouncing (300ms)
@@ -76,7 +76,7 @@ Infinite scroll list page pattern with server-side pagination, sorting, and sear
 
 **Source:** [src/composables/useInfiniteScroll.ts](./src/composables/useInfiniteScroll.ts)  
 **Tests:** [tests/composables/useInfiniteScroll.test.ts](./tests/composables/useInfiniteScroll.test.ts)  
-**Example:** See [template_vue_vuetify ControlsListPage](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/pages/ControlsListPage.vue) for real-world usage
+**Example:** See [template_vue_vuetify ControlsListPage](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/pages/ControlsListPage.vue) for real-world usage
 
 **Features:**
 - Infinite scroll with cursor-based pagination
@@ -115,7 +115,7 @@ Role-based access control with dependency injection pattern.
 
 **Source:** [src/composables/useRoles.ts](./src/composables/useRoles.ts)  
 **Tests:** [tests/composables/useRoles.test.ts](./tests/composables/useRoles.test.ts)  
-**Example:** See [template_vue_vuetify useRoles wrapper](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/composables/useRoles.ts) for recommended implementation
+**Example:** See [template_vue_vuetify useRoles wrapper](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/composables/useRoles.ts) for recommended implementation
 
 **Recommended:** Create a wrapper in your app that provides app-specific auth and config. Accepts optional `AuthProvider` and `ConfigProvider` for dependency injection. Returns `roles`, `hasRole`, and `hasAnyRole`.
 
@@ -145,7 +145,7 @@ Text input or textarea with auto-save on blur.
 - Only saves when value changes
 - Displays validation errors
 
-**Real-world example:** See [template_vue_vuetify ControlEditPage](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/pages/ControlEditPage.vue)
+**Real-world example:** See [template_vue_vuetify ControlEditPage](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/pages/ControlEditPage.vue)
 
 #### AutoSaveSelect
 
@@ -164,7 +164,7 @@ Select dropdown with auto-save on blur.
 - `hint?: string` - Helper text
 - `automationId?: string` - Automation ID for testing
 
-**Real-world example:** See [template_vue_vuetify ControlEditPage](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/pages/ControlEditPage.vue)
+**Real-world example:** See [template_vue_vuetify ControlEditPage](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/pages/ControlEditPage.vue)
 
 #### ListPageSearch
 
@@ -174,7 +174,7 @@ Reusable search field for list pages.
 **Demo:** See [demo/pages/DemoPage.vue](./demo/pages/DemoPage.vue) for working examples  
 **E2E Tests:** [cypress/e2e/components.cy.ts](./cypress/e2e/components.cy.ts)
 
-**Real-world example:** See [template_vue_vuetify CreatesListPage](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/pages/CreatesListPage.vue) and [ControlsListPage](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/pages/ControlsListPage.vue)
+**Real-world example:** See [template_vue_vuetify CreatesListPage](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/pages/CreatesListPage.vue) and [ControlsListPage](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/pages/ControlsListPage.vue)
 
 ### Utilities
 
@@ -187,7 +187,7 @@ Format ISO date strings to localized strings. Returns `"N/A"` for null/undefined
 **Demo:** See [demo/pages/DemoPage.vue](./demo/pages/DemoPage.vue) for usage examples  
 **E2E Tests:** [cypress/e2e/utils.cy.ts](./cypress/e2e/utils.cy.ts)
 
-**Real-world example:** See [template_vue_vuetify ControlsListPage](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/pages/ControlsListPage.vue)
+**Real-world example:** See [template_vue_vuetify ControlsListPage](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/pages/ControlsListPage.vue)
 
 #### validationRules
 
@@ -198,7 +198,7 @@ Common validation rules for form fields. Includes `required`, `namePattern` (no 
 **Demo:** See [demo/pages/DemoPage.vue](./demo/pages/DemoPage.vue) for usage examples  
 **E2E Tests:** [cypress/e2e/utils.cy.ts](./cypress/e2e/utils.cy.ts)
 
-**Real-world example:** See [template_vue_vuetify ControlNewPage](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/pages/ControlNewPage.vue) and [ControlEditPage](https://github.com/agile-learning-institute/template_vue_vuetify/blob/main/src/pages/ControlEditPage.vue)
+**Real-world example:** See [template_vue_vuetify ControlNewPage](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/pages/ControlNewPage.vue) and [ControlEditPage](https://github.com/https://github.com/template_vue_vuetify/blob/main/src/pages/ControlEditPage.vue)
 
 ## Demo App
 
@@ -210,6 +210,6 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, project structur
 
 ## See Also
 
-- **Real-world usage:** [template_vue_vuetify](https://github.com/agile-learning-institute/template_vue_vuetify) - Complete SPA template using spa_utils
-- **Backing service:** [api_utils](https://github.com/agile-learning-institute/api_utils) - Python utilities for API development
+- **Real-world usage:** [template_vue_vuetify](https://github.com/https://github.com/template_vue_vuetify) - Complete SPA template using spa_utils
+- **Backing service:** [api_utils](https://github.com/https://github.com/api_utils) - Python utilities for API development
 - **Standards:** [SPA Standards](https://github.com/agile-learning-institute/mentorhub/blob/main/DeveloperEdition/standards/spa_standards.md) - Mentor Hub SPA development standards

@@ -103,7 +103,7 @@ jobs:
         run: |
           echo "Package published successfully!"
           echo "Version: ${{ steps.version_check.outputs.version }}"
-          echo "Package: @agile-learning-institute/spa_utils@${{ steps.version_check.outputs.version }}"
+          echo "Package: @agile-learning-institute/mentorhub_spa_utils@${{ steps.version_check.outputs.version }}"
       
       - name: Fail if version not bumped
         if: steps.version_check.outputs.changed == 'false'

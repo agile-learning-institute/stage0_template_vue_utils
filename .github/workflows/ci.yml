@@ -21,7 +21,7 @@ jobs:
       
       - name: Verify GH_PAT secret is available
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_PAT: {% raw %}${{ secrets.GH_PAT }}{% endraw %}
         run: |
           if [ -z "$GH_PAT" ]; then
             echo "❌ ERROR: GH_PAT secret is empty or not set!"
@@ -37,7 +37,7 @@ jobs:
       
       - name: Configure npm for GitHub Packages
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GH_PAT: {% raw %}${{ secrets.GH_PAT }}{% endraw %}
         run: |
           # Remove project-level .npmrc if it exists (it uses ${GITHUB_TOKEN} which won't work in CI)
           if [ -f .npmrc ]; then
@@ -45,7 +45,7 @@ jobs:
           fi
           
           # Create .npmrc in project root with actual token value
-          echo "@{{org.git_host}}:registry=https://npm.pkg.github.com" > .npmrc
+          echo "@{{org.git_org}}:registry=https://npm.pkg.github.com" > .npmrc
           echo "//npm.pkg.github.com/:_authToken=$GH_PAT" >> .npmrc
       
       - name: Install dependencies
@@ -102,13 +102,13 @@ jobs:
         if: steps.version_check.outputs.changed == 'true'
         run: |
           echo "Package published successfully!"
-          echo "Version: ${{ steps.version_check.outputs.version }}"
-          echo "Package: @{{org.git_host}}/spa_utils@${{ steps.version_check.outputs.version }}"
+          echo "Version: {% raw %}${{ steps.version_check.outputs.version }}{% endraw %}"
+          echo "Package: @{{org.git_org}}/{{info.slug}}_spa_utils@{% raw %}${{ steps.version_check.outputs.version }}{% endraw %}"
       
       - name: Fail if version not bumped
         if: steps.version_check.outputs.changed == 'false'
         run: |
           echo "❌ Version was not bumped in this commit"
           echo "Please bump the version in package.json before merging to main"
-          echo "Current version: ${{ steps.version_check.outputs.version }}"
+          echo "Current version: {% raw %}${{ steps.version_check.outputs.version }}{% endraw %}"
           exit 1

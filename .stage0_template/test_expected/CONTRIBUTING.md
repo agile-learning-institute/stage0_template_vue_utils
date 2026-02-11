@@ -6,7 +6,7 @@ Thank you for contributing to spa_utils! This guide will help you get started.
 
 ### Prerequisites
 
-- info.slug [Developers Edition](https://github.com/agile-learning-institute/info.slug/blob/main/DeveloperEdition/README.md)
+- Mentor Hub [Developers Edition](https://github.com/agile-learning-institute/mentorhub/blob/main/CONTRIBUTING.md)
 
 ### Getting Started
 

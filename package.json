@@ -1,5 +1,5 @@
 {
-  "name": "@{{org.git_host}}/spa_utils",
+  "name": "@{{org.git_org}}/{{info.slug}}_spa_utils",
   "version": "0.2.0",
   "type": "module",
   "description": "Reusable Vue 3 + Vuetify components, composables, and utilities",
@@ -71,7 +71,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "{{ogr.git_host}}/{{org.git_org}}/{{info.slug}}_spa_utils.git"
+    "url": "{{org.git_host}}/{{org.git_org}}/{{info.slug}}_spa_utils.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
