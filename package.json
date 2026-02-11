@@ -1,6 +1,6 @@
 {
   "name": "@{{org.git_org}}/{{info.slug}}_spa_utils",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "Reusable Vue 3 + Vuetify components, composables, and utilities",
   "main": "./dist/index.js",
