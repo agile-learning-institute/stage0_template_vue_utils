@@ -1,0 +1,114 @@
+name: Publish to npm
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  publish:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need previous commit to compare versions
+      
+      - name: Verify GH_PAT secret is available
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          if [ -z "$GH_PAT" ]; then
+            echo "❌ ERROR: GH_PAT secret is empty or not set!"
+            echo "Please verify the secret exists in: Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: Configure npm for GitHub Packages
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: |
+          # Remove project-level .npmrc if it exists (it uses ${GITHUB_TOKEN} which won't work in CI)
+          if [ -f .npmrc ]; then
+            mv .npmrc .npmrc.backup
+          fi
+          
+          # Create .npmrc in project root with actual token value
+          echo "@agile-learning-institute:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=$GH_PAT" >> .npmrc
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run unit tests
+        run: npm test
+      
+      - name: Check if version changed
+        id: version_check
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          PREV_VERSION=$(git show HEAD~1:package.json 2>/dev/null | node -p "JSON.parse(require('fs').readFileSync(0, 'utf-8')).version" 2>/dev/null || echo "")
+          
+          if [ -z "$PREV_VERSION" ]; then
+            echo "No previous version found (first commit?), will attempt to publish"
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          elif [ "$CURRENT_VERSION" != "$PREV_VERSION" ]; then
+            echo "Version changed from $PREV_VERSION to $CURRENT_VERSION"
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          else
+            echo "Version unchanged ($CURRENT_VERSION), skipping publish"
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Build package
+        if: steps.version_check.outputs.changed == 'true'
+        run: npm run build
+      
+      - name: Verify build output
+        if: steps.version_check.outputs.changed == 'true'
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Error: dist directory not found"
+            exit 1
+          fi
+          if [ ! -f "dist/index.js" ]; then
+            echo "Error: dist/index.js not found"
+            exit 1
+          fi
+          if [ ! -f "dist/index.d.ts" ]; then
+            echo "Error: dist/index.d.ts not found"
+            exit 1
+          fi
+      
+      - name: Publish to GitHub npm
+        if: steps.version_check.outputs.changed == 'true'
+        run: npm publish
+      
+      - name: Verify publication
+        if: steps.version_check.outputs.changed == 'true'
+        run: |
+          echo "Package published successfully!"
+          echo "Version: ${{ steps.version_check.outputs.version }}"
+          echo "Package: @agile-learning-institute/spa_utils@${{ steps.version_check.outputs.version }}"
+      
+      - name: Fail if version not bumped
+        if: steps.version_check.outputs.changed == 'false'
+        run: |
+          echo "❌ Version was not bumped in this commit"
+          echo "Please bump the version in package.json before merging to main"
+          echo "Current version: ${{ steps.version_check.outputs.version }}"
+          exit 1
