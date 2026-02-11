@@ -1,6 +1,6 @@
 # spa_utils
 
-<!-- TODO: `npm run build && npm run publish` and then delete this line -->
+<!-- TODO: `npm run publish:manual` and then delete this line -->
 
 Reusable Vue 3 + Vuetify components, composables, and utilities for Mentor Hub SPAs.
 
