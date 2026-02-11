@@ -18,10 +18,14 @@ export default defineConfig({
       exclude: [
         'node_modules/',
         '**/*.config.ts',
+        '**/vite.config*.ts',
         '**/dist/**',
         '**/*.spec.ts',
         '**/*.test.ts',
         '**/index.ts', // Exclude re-export index files
+        'cypress/**', // E2E tests - covered by Cypress
+        'demo/**', // Demo app - not unit tested
+        '**/vite-env.d.ts'
       ],
       thresholds: {
         'src/composables/**': {

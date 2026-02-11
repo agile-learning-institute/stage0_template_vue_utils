@@ -1,6 +1,6 @@
 $schema: "https://stage0/schemas/process.schema.yaml"
-$id: "https://stage0/template-configurator-api/process.yaml"
-title: Process file for a MongoDB configurator API template
+$id: "https://stage0/stage0_template_vue_utils/process.yaml"
+title: Process file for Vue SPA utility library template
 version: "1.0"
 
 environment:
@@ -18,6 +18,24 @@ context:
   - key: architecture
     type: path
     path: specifications.architecture.architecture
+  - key: common_code
+    type: selector
+    path: architecture.domains
+    filter:
+      property: name
+      value: "common_code"
+  - key: api_utils
+    type: selector
+    path: common_code.repos
+    filter:
+      property: name
+      value: "api_utils"
+  - key: spa_utils
+    type: selector
+    path: common_code.repos
+    filter:
+      property: name
+      value: "spa_utils"
 
 requires:
   - info.name
@@ -28,6 +46,9 @@ requires:
   - org.git_org
   - dictionaries   
   - architecture.domains
+  - common_code
+  - api_utils.port
+  - spa_utils.port
 
 templates:
   - path: "./LICENSE"
@@ -45,5 +66,9 @@ templates:
   - path: "./package.json"
     merge: true
   - path: "./.github/workflows/ci.yml"
+    merge: true
+  - path: "./vite.config.dev.ts"
+    merge: true
+  - path: "./cypress.config.ts"
     merge: true
 

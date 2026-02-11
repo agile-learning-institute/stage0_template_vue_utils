@@ -1,5 +1,14 @@
 import { config } from '@vue/test-utils'
 
+// Suppress expected console.error from AutoSaveField/AutoSaveSelect error-handling tests
+const originalError = console.error
+console.error = (...args: unknown[]) => {
+  if (typeof args[0] === 'string' && args[0].includes('Auto-save error:')) {
+    return
+  }
+  originalError.apply(console, args)
+}
+
 // Global stubs for Vuetify components
 // This prevents Vue warnings about unresolved components during tests
 config.global.stubs = {

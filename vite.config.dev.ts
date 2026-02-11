@@ -10,14 +10,14 @@ export default defineConfig({
     }
   },
   server: {
-    port: 8081,
+    port: {{ spa_utils.port }},
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:{{ api_utils.port }}',
         changeOrigin: true
       },
       '/dev-login': {
-        target: 'http://localhost:8080',
+        target: 'http://localhost:{{ api_utils.port }}',
         changeOrigin: true
       }
     }

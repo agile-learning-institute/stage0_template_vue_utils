@@ -1,6 +1,6 @@
-# Contributing to spa_utils
+# Contributing to {{info.slug}}_spa_utils
 
-Thank you for contributing to spa_utils! This guide will help you get started.
+Thank you for contributing to {{info.slug}}_spa_utils! This guide will help you get started.
 
 ## Development Setup
 
@@ -27,7 +27,7 @@ npm run test:coverage
 npm run test:ui
 
 # Run Dev Server (demo app)
-# Assumes api_utils dev server running at localhost:8080
+# Assumes api_utils dev server running at localhost:{{ api_utils.port }}
 npm run dev
 
 # Cypress E2E tests (interactive)
@@ -40,7 +40,7 @@ npm run cypress:run
 ## Project Structure
 
 ```
-spa_utils/
+{{info.slug}}_spa_utils/
 ├── src/
 │   ├── composables/     # Reusable composables
 │   ├── components/      # Vue components

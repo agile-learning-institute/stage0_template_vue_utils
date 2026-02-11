@@ -1,6 +1,6 @@
-# Contributing to spa_utils
+# Contributing to mentorhub_spa_utils
 
-Thank you for contributing to spa_utils! This guide will help you get started.
+Thank you for contributing to mentorhub_spa_utils! This guide will help you get started.
 
 ## Development Setup
 
@@ -27,7 +27,7 @@ npm run test:coverage
 npm run test:ui
 
 # Run Dev Server (demo app)
-# Assumes api_utils dev server running at localhost:8080
+# Assumes api_utils dev server running at localhost:8387
 npm run dev
 
 # Cypress E2E tests (interactive)
@@ -40,7 +40,7 @@ npm run cypress:run
 ## Project Structure
 
 ```
-spa_utils/
+mentorhub_spa_utils/
 ├── src/
 │   ├── composables/     # Reusable composables
 │   ├── components/      # Vue components
