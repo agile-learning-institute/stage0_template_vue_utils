@@ -114,12 +114,13 @@ npm run major   # For major releases (0.1.0 → 1.0.0)
 
 ### Manual Publishing
 
-If the CI publish workflow fails for other reasons, you can publish manually:
+If the CI publish workflow fails (e.g., first publish when the package does not yet exist on GitHub Packages), you can publish manually:
 
 ```bash
-npm run build
-npm publish
+npm run publish
 ```
+
+This builds the package and publishes it to GitHub Packages. Standards setup configures `GITHUB_TOKEN` for authentication.
 
 ## Testing Requirements
 
