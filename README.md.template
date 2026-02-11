@@ -1,6 +1,6 @@
 # spa_utils
 
-<!-- TODO: `npm run publish:manual` and then delete this line -->
+# **TODO:** `npm install --include=dev && npm run publish:manual` and then **Delete This Line**
 
 Reusable Vue 3 + Vuetify components, composables, and utilities for {{info.name}} SPAs.
 
