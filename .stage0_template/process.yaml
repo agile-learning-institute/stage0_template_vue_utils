@@ -65,8 +65,6 @@ templates:
     merge: true
   - path: "./package.json"
     merge: true
-  - path: "./package-lock.json"
-    merge: true
   - path: "./.github/workflows/ci.yml"
     merge: true
   - path: "./vite.config.dev.ts"
