@@ -1,7 +1,5 @@
 # spa_utils
 
-# **TODO:** `npm install --include=dev && npm run publish:manual` and then **Delete This Line**
-
 Reusable Vue 3 + Vuetify components, composables, and utilities for Mentor Hub SPAs.
 
 This package follows the same pattern as `api_utils`, providing shared functionality across all SPA projects in the Mentor Hub ecosystem.
