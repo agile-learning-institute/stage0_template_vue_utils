@@ -22,10 +22,15 @@
     "./utils": {
       "import": "./dist/utils/index.js",
       "types": "./dist/utils/index.d.ts"
+    },
+    "./cypress/commands": {
+      "types": "./cypress/support/commands.ts",
+      "default": "./cypress/support/commands.ts"
     }
   },
   "files": [
     "dist",
+    "cypress",
     "README.md",
     "LICENSE"
   ],
