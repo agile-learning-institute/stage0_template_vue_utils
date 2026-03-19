@@ -16,40 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2  # Need previous commit to compare versions
-      
-      - name: Verify GH_PAT secret is available
-        env:
-          GH_PAT: {% raw %}${{ secrets.GH_PAT }}{% endraw %}
-        run: |
-          if [ -z "$GH_PAT" ]; then
-            echo "❌ ERROR: GH_PAT secret is empty or not set!"
-            echo "Please verify the secret exists in: Settings → Secrets and variables → Actions"
-            exit 1
-          fi
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
-      - name: Configure npm for GitHub Packages
-        env:
-          GH_PAT: {% raw %}${{ secrets.GH_PAT }}{% endraw %}
-        run: |
-          # Remove project-level .npmrc if it exists (it uses ${GITHUB_TOKEN} which won't work in CI)
-          if [ -f .npmrc ]; then
-            mv .npmrc .npmrc.backup
-          fi
-          
-          # Create .npmrc in project root with actual token value
-          echo "@{{org.git_org}}:registry=https://npm.pkg.github.com" > .npmrc
-          echo "//npm.pkg.github.com/:_authToken=$GH_PAT" >> .npmrc
       
       - name: Install dependencies
         run: npm ci
@@ -97,9 +73,16 @@ jobs:
             exit 1
           fi
       
-      - name: Publish to GitHub npm
+      - name: Configure npm for public registry (publish only)
         if: steps.version_check.outputs.changed == 'true'
-        run: npm publish
+        env:
+          NPM_TOKEN: {% raw %}${{ secrets.NPM_TOKEN }}{% endraw %}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+      
+      - name: Publish to npm
+        if: steps.version_check.outputs.changed == 'true'
+        run: npm publish --access public
       
       - name: Verify publication
         if: steps.version_check.outputs.changed == 'true'

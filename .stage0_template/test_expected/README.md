@@ -18,26 +18,23 @@ When working on both `spa_utils` and a consuming project simultaneously:
 }
 ```
 
-### Production (GitHub npm)
+### Production (public npm)
+
+Install from the public npm registry (no auth required):
+
+```bash
+npm install @agile-learning-institute/mentorhub_spa_utils
+```
+
+Or add to `package.json`:
 
 ```json
 {
   "dependencies": {
-    "@https://github.com/spa_utils": "github:https://github.com/spa_utils#v0.1.0"
+    "@agile-learning-institute/mentorhub_spa_utils": "^0.1.0"
   }
 }
 ```
-
-### Configure .npmrc
-
-Create `.npmrc` in your project root:
-
-```
-@https://github.com:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
-```
-
-Requires `GITHUB_TOKEN` that should be configured as part of [Developer Edition](https://github.com/agile-learning-institute/mentorhub/blob/main/DeveloperEdition/README.md) install. If ``echo $GITHUB_TOKEN`` doesn't display your token, review the Developer Edition onboarding process.
 
 ## Usage
 

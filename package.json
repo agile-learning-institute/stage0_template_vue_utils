@@ -83,6 +83,7 @@
     "url": "{{org.git_host}}/{{org.git_org}}/{{info.slug}}_spa_utils.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }

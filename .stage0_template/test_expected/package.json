@@ -83,6 +83,7 @@
     "url": "https://github.com/agile-learning-institute/mentorhub_spa_utils.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }

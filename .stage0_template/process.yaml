@@ -61,8 +61,6 @@ templates:
   - path: "./Makefile"
     output: "/dev/null"
     merge: true
-  - path: ".npmrc"
-    merge: true
   - path: "./package.json"
     merge: true
   - path: "./.github/workflows/ci.yml.template"
