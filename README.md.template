@@ -18,44 +18,35 @@ When working on both `spa_utils` and a consuming project simultaneously:
 }
 ```
 
-### Production (GitHub Packages)
+### Production (recommended: git dependency)
 
-The package is **public** on [GitHub Packages](https://github.com/features/packages) (`npm.pkg.github.com`), **not** on registry.npmjs.org. GitHub’s npm API still requires a token to **install**, even when the package is public.
-
-In the consuming app, add to `.npmrc` (project or user):
-
-```text
-@{{org.git_org}}:registry=https://npm.pkg.github.com/
-```
-
-Configure **`//npm.pkg.github.com/:_authToken`** (PAT with **`read:packages`** or `gh auth token`) for local installs.
-
-For **GitHub Actions** in another repo (e.g. an SPA Dockerfile running `npm install`), the workflow’s **`GITHUB_TOKEN`** can work **without a PAT secret** if you grant that repository access on **this package**: GitHub → **Packages** → this npm package → **Package settings** → **Manage Actions access** → add the SPA repo with at least **Read**.
-
-Then:
-
-```bash
-npm install @{{org.git_org}}/{{info.slug}}_spa_utils
-```
-
-Or add to `package.json`:
+Stage0 SPA templates install this library from **Git** (see `template_vue_vuetify` / `template_vue_phaser`). In `package.json`:
 
 ```json
 {
   "dependencies": {
-    "@{{org.git_org}}/{{info.slug}}_spa_utils": "^0.1.0"
+    "@{{org.git_org}}/{{info.slug}}_spa_utils": "github:{{org.git_org}}/{{info.slug}}_spa_utils#main"
   }
 }
 ```
 
-## Publishing
+Pin a **branch**, **tag**, or **commit** instead of `main` when you want stability. There is no `^` semver range for git installs.
 
-`make publish-package` / **`npm run publish-package`** runs **`scripts/publish-npm.cjs`**, which writes a **short-lived** npm userconfig (`.npmrc.publish`, gitignored) from environment variables, runs **`npm publish`**, then deletes it. You do **not** need a committed **`.npmrc`** or a hand-written token file—same behavior in **Stage0 Launch**, **GitHub Actions**, and local shells.
+After clone, npm runs the **`prepare`** script here, which builds **`dist/`** (this repo does not commit `dist`). **Private** `{{info.slug}}_spa_utils` needs git credentials (e.g. **`GITHUB_TOKEN`** in Docker, or `gh auth setup-git` locally).
 
-- **Why auth exists:** **Publish** needs **`write:packages`**. **Install** from `npm.pkg.github.com` also needs a token (including for *public* packages)—unlike public packages on npmjs.org.
-- **Environment:** set **`NODE_AUTH_TOKEN`** or **`GITHUB_TOKEN`** to a token with **`write:packages`** (the same class of token you use for GHCR to the same org is fine). The script also sets **`@scope:registry`** for **`npm.pkg.github.com`**, which plain **`npm publish`** often misses when only the env var is set (avoids **401**).
-- **GitHub Actions:** **`NODE_AUTH_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}`** on the publish step; job has **`packages: write`**. **`actions/setup-node`** with **`registry-url`** stays so **`npm ci`** can resolve scoped deps if needed.
-- **Optional:** with no env token, the script falls back to **`npm publish`** (e.g. after **`npm login --registry=https://npm.pkg.github.com`**).
+### Optional: GitHub Packages (semver)
+
+You can still **`npm publish`** to **`npm.pkg.github.com`** (`npm run publish-package`) for consumers that prefer registry versions. That path needs `.npmrc` scope + token to **install**, and **Manage Actions access** per consumer repo if using **`GITHUB_TOKEN`**—see [Publishing](#publishing) below.
+
+## Publishing (optional GitHub Packages)
+
+`make publish-package` / **`npm run publish-package`** pushes a semver package to **`npm.pkg.github.com`** for teams that want registry installs. Default SPA templates **consume via git** instead so CI does not require package-level **Manage Actions access**.
+
+`scripts/publish-npm.cjs` writes a **short-lived** `.npmrc.publish` (gitignored), runs **`npm publish`**, then deletes it.
+
+- **Token:** **`NODE_AUTH_TOKEN`** or **`GITHUB_TOKEN`** with **`write:packages`**.
+- **GitHub Actions:** job needs **`packages: write`**; **`NODE_AUTH_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}`** on the publish step.
+- **Consumers of the npm package:** each repo still needs **Package settings → Manage Actions access** (or a PAT) to use **`GITHUB_TOKEN`** against GPR—this is **not** automatable via a supported API; prefer **git dependencies** in templates to avoid that on the free tier.
 
 ## Usage
 

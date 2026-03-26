@@ -35,6 +35,7 @@
     "LICENSE"
   ],
   "scripts": {
+    "prepare": "npm run build",
     "build": "vite build && tsc --emitDeclarationOnly --outDir dist",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",

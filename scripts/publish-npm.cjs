@@ -6,6 +6,9 @@
  *
  * GitHub Packages: npm often returns 401 if only NODE_AUTH_TOKEN is set; it also
  * needs the scoped registry mapping. This script adds both.
+ *
+ * Optional GPR publish: SPA templates consume this library via git by default; publishing
+ * here is for teams that want semver on npm.pkg.github.com (separate ACL / PAT story).
  */
 'use strict';
 
