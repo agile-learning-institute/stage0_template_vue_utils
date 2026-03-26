@@ -27,7 +27,7 @@ npm run test:coverage
 npm run test:ui
 
 # Run Dev Server (demo app)
-# Assumes api_utils dev server running at localhost:8387
+# Assumes api_utils dev server running at localhost:8385
 npm run dev
 
 # Cypress E2E tests (interactive)
