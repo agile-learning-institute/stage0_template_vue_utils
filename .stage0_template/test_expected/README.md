@@ -18,9 +18,17 @@ When working on both `spa_utils` and a consuming project simultaneously:
 }
 ```
 
-### Production (public npm)
+### Production (GitHub Packages)
 
-Install from the public npm registry (no auth required):
+The package is **public** on [GitHub Packages](https://github.com/features/packages) under the same GitHub org as the repo. Installing is anonymous for public packages; npm only needs to know which registry hosts this scope.
+
+In the consuming app, add to `.npmrc` (project or user):
+
+```text
+@agile-learning-institute:registry=https://npm.pkg.github.com/
+```
+
+Then:
 
 ```bash
 npm install @agile-learning-institute/mentorhub_spa_utils
@@ -35,6 +43,15 @@ Or add to `package.json`:
   }
 }
 ```
+
+## Publishing
+
+`make publish-package` / **`npm run publish-package`** runs **`scripts/publish-npm.cjs`**, which writes a **short-lived** npm userconfig (`.npmrc.publish`, gitignored) from environment variables, runs **`npm publish`**, then deletes it. You do **not** need a committed **`.npmrc`** or a hand-written token file—same behavior in **Stage0 Launch**, **GitHub Actions**, and local shells.
+
+- **Why auth exists:** a *public* package is still a **publish** (write). Anyone can **install** without a token; only **uploads** need permission—same idea as pushing containers to GHCR.
+- **Environment:** set **`NODE_AUTH_TOKEN`** or **`GITHUB_TOKEN`** to a token with **`write:packages`** (the same class of token you use for GHCR to the same org is fine). The script also sets **`@scope:registry`** for **`npm.pkg.github.com`**, which plain **`npm publish`** often misses when only the env var is set (avoids **401**).
+- **GitHub Actions:** **`NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}`** on the publish step; job has **`packages: write`**. **`actions/setup-node`** with **`registry-url`** stays so **`npm ci`** can resolve scoped deps if needed.
+- **Optional:** with no env token, the script falls back to **`npm publish`** (e.g. after **`npm login --registry=https://npm.pkg.github.com`**).
 
 ## Usage
 

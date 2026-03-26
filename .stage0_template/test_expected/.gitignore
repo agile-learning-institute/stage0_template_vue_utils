@@ -28,6 +28,9 @@ dist-ssr
 .env.local
 .env.*.local
 
+# Ephemeral npm userconfig (see scripts/publish-npm.cjs); never commit tokens.
+.npmrc.publish
+
 # Cypress
 cypress/videos
 cypress/screenshots

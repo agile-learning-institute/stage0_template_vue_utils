@@ -1,4 +1,4 @@
-name: Publish to npm
+name: Publish to GitHub Packages
 
 on:
   push:
@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,6 +27,8 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@{{org.git_org}}'
       
       - name: Install dependencies
         run: npm ci
@@ -73,16 +76,11 @@ jobs:
             exit 1
           fi
       
-      - name: Configure npm for public registry (publish only)
+      - name: Publish to GitHub Packages
         if: steps.version_check.outputs.changed == 'true'
         env:
-          NPM_TOKEN: {% raw %}${{ secrets.NPM_TOKEN }}{% endraw %}
-        run: |
-          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-      
-      - name: Publish to npm
-        if: steps.version_check.outputs.changed == 'true'
-        run: npm publish --access public
+          NODE_AUTH_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+        run: npm run publish-package
       
       - name: Verify publication
         if: steps.version_check.outputs.changed == 'true'
