@@ -3,6 +3,9 @@
  *
  * - Fragment `#access_token=...&expires_at=...&roles=a,b` persists to localStorage (keys match SPA useAuth).
  * - Query `?dev_logout=1` clears auth storage (used by welcome-page logout iframes).
+ *
+ * Parsing avoids `URLSearchParams` on the raw fragment: the x-www-form-urlencoded rule that treats
+ * `+` as space breaks ISO-8601 offsets (e.g. `...+00:00`) after the browser decodes `%2B` to `+`.
  */
 const LS_ACCESS = 'access_token'
 const LS_EXPIRES = 'token_expires_at'
@@ -12,6 +15,29 @@ export function clearDevAuthLocalStorage(): void {
   localStorage.removeItem(LS_ACCESS)
   localStorage.removeItem(LS_EXPIRES)
   localStorage.removeItem(LS_ROLES)
+}
+
+function tryDecodeURIComponent(s: string): string {
+  try {
+    return decodeURIComponent(s)
+  } catch {
+    return s
+  }
+}
+
+/** Split `a=b&c=d` on `&`, then split each pair on the first `=` only (JWT values may contain `=` padding). */
+function parseAuthHashParams(raw: string): Map<string, string> {
+  const map = new Map<string, string>()
+  if (!raw) return map
+  for (const segment of raw.split('&')) {
+    if (!segment) continue
+    const eq = segment.indexOf('=')
+    if (eq <= 0) continue
+    const encKey = segment.slice(0, eq)
+    const encVal = segment.slice(eq + 1)
+    map.set(tryDecodeURIComponent(encKey), tryDecodeURIComponent(encVal))
+  }
+  return map
 }
 
 function stripDevLogoutQuery(): void {
@@ -27,13 +53,7 @@ function applyHashToken(): void {
   const raw = window.location.hash.replace(/^#/, '')
   if (!raw || !raw.includes('access_token=')) return
 
-  let params: URLSearchParams
-  try {
-    params = new URLSearchParams(raw)
-  } catch {
-    return
-  }
-
+  const params = parseAuthHashParams(raw)
   const token = params.get('access_token')
   const expiresAt = params.get('expires_at')
   if (!token || !expiresAt) return
