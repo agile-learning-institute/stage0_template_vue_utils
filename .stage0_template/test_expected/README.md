@@ -1,6 +1,6 @@
-# spa_utils
+# Mentor Hub — shared SPA utilities
 
-Reusable Vue 3 + Vuetify components, composables, and utilities for Mentor Hub SPAs.
+Reusable Vue 3 + Vuetify components, composables, and utilities for **`mentorhub_spa_utils`** and other Mentor Hub SPAs.
 
 This package follows the same pattern as `api_utils`, providing shared functionality across all SPA projects in the Mentor Hub ecosystem.
 
