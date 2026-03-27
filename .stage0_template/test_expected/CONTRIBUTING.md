@@ -44,15 +44,16 @@ mentorhub_spa_utils/
 ├── src/
 │   ├── composables/     # Reusable composables
 │   ├── components/      # Vue components
-│   ├── utils/           # Utility functions
+│   ├── utils/           # Utility functions (incl. devAuthBootstrap for DE URL hash)
 │   └── index.ts         # Main export
 ├── demo/                # Demo app for testing components
 │   ├── App.vue          # Layout: app bar, nav drawer, router-view
 │   ├── main.ts          # Entry point
+│   ├── bootstrap-auth.ts    # bootstrapDevAuthFromUrl before app
 │   ├── router.ts        # Routes: /login, /demo, /admin
 │   ├── composables/     # useAuth, useConfig (demo-only)
 │   ├── pages/
-│   │   ├── LoginPage.vue    # Developer login (dev-login)
+│   │   ├── LoginPage.vue    # Sign-in gate (IdP / hash; no dev-login API)
 │   │   ├── DemoPage.vue     # Component & utility demos
 │   │   └── AdminPage.vue    # Config (api_utils /api/config)
 │   ├── components/      # Admin UI (config tables, token card)
@@ -137,9 +138,9 @@ npm run publish-package
 
 ## Demo App
 
-The demo app provides a full flow: **login** → **component demos** (with hamburger **navigation drawer**) → **admin page** (config) when user has `admin` role. It uses the [api_utils](https://github.com/agile-learning-institute/api_utils) dev server for `/dev-login` and `/api/config`.
+The demo app provides a full flow: **sign-in** (localStorage or URL hash via `bootstrapDevAuthFromUrl`) → **component demos** (navigation drawer) → **admin page** (config) when the user has the `admin` role. The dev server may proxy `/api` to an [api_utils](https://github.com/agile-learning-institute/mentorhub_api_utils) demo for config; there is no `/dev-login` proxy.
 
-- **Login:** [demo/pages/LoginPage.vue](./demo/pages/LoginPage.vue) — developer login form
+- **Sign-in:** [demo/pages/LoginPage.vue](./demo/pages/LoginPage.vue) — gate and instructions (uses [demo/bootstrap-auth.ts](./demo/bootstrap-auth.ts))
 - **Layout & nav:** [demo/App.vue](./demo/App.vue) — app bar, hamburger, drawer (demo / admin / logout)
 - **Component demos:** [demo/pages/DemoPage.vue](./demo/pages/DemoPage.vue) — AutoSaveField, AutoSaveSelect, ListPageSearch, formatDate, validationRules
 - **Admin (config):** [demo/pages/AdminPage.vue](./demo/pages/AdminPage.vue) — config items, versions, enumerators, token (requires `admin` role)

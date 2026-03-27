@@ -50,7 +50,11 @@ You can still **`npm publish`** to **`npm.pkg.github.com`** (`npm run publish-pa
 
 ## Usage
 
-For complete working examples, see the [demo app](./demo/) which includes a **login page**, **navigation drawer** (hamburger), **component demo page**, and **admin (config) page**. The demo uses the api_utils backing service for dev-login and config.
+For complete working examples, see the [demo app](./demo/) which includes a **sign-in gate**, **navigation drawer** (hamburger), **component demo page**, and **admin (config) page**. The dev server can proxy `/api` to a local api_utils demo; auth uses `bootstrapDevAuthFromUrl` and localStorage, not `/dev-login`.
+
+### Developer Edition: bootstrap from URL
+
+Product SPAs should call **`bootstrapDevAuthFromUrl()` once before the router mounts** (e.g. from `src/initAuth.ts` imported from `main.ts`). It reads `#access_token=...&expires_at=...&roles=...` into the same `localStorage` keys as your auth composable, and handles `?dev_logout=1` for welcome-page logout. See umbrella [SPA standards]({{org.git_host}}/{{org.git_org}}/{{info.slug}}/blob/main/DeveloperEdition/standards/spa_standards.md) and `VITE_IDP_LOGIN_URI` for unauthenticated redirects.
 
 ### Composables
 
@@ -211,7 +215,7 @@ Common validation rules for form fields. Includes `required`, `namePattern` (no 
 
 ## Demo App
 
-For complete working examples, see the [demo app](./demo/) which includes a **login page**, **navigation drawer** (hamburger), **component demo page**, and **admin (config) page**. The demo uses the api_utils backing service for dev-login and config.
+For complete working examples, see the [demo app](./demo/) which includes a **sign-in gate**, **navigation drawer** (hamburger), **component demo page**, and **admin (config) page**. The dev server can proxy `/api` to a local api_utils demo; auth uses `bootstrapDevAuthFromUrl` and localStorage, not `/dev-login`.
 
 ## Contributing
 

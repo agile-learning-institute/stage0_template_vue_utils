@@ -1,3 +1,4 @@
+import './bootstrap-auth'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { createVuetify } from 'vuetify'

@@ -14,4 +14,11 @@ describe('utils/index', () => {
     expect(utils.validationRules.namePattern).toBeDefined()
     expect(utils.validationRules.descriptionPattern).toBeDefined()
   })
+
+  it('should export Developer Edition auth bootstrap helpers', () => {
+    expect(utils.bootstrapDevAuthFromUrl).toBeDefined()
+    expect(typeof utils.bootstrapDevAuthFromUrl).toBe('function')
+    expect(utils.clearDevAuthLocalStorage).toBeDefined()
+    expect(typeof utils.clearDevAuthLocalStorage).toBe('function')
+  })
 })
