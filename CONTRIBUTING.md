@@ -99,28 +99,17 @@ When adding new utilities, components, or composables:
    - Use TypeScript types consistently
    - Add automation IDs to interactive elements
 
-## Publishing Workflow
+## Versioning
 
-Follow the normal feature-branch workflow. Before opening a PR, bump the version so CI can publish the new version.
-
-### Version Bump Commands
+Consuming SPAs pin this library via **git** (branch, tag, or commit). Bump **`package.json`** version when you cut a release tag so downstream changelog and support are clear.
 
 ```bash
-npm run patch   # For patch releases (0.1.0 → 0.1.1)
-npm run minor   # For minor releases (0.1.0 → 0.2.0)
-npm run major   # For major releases (0.1.0 → 1.0.0)
+npm run patch   # 0.1.0 → 0.1.1 (no git tag)
+npm run minor   # 0.1.0 → 0.2.0
+npm run major   # 0.1.0 → 1.0.0
 ```
 
-**Note:** If you merge to `main` without bumping the version, the publish workflow will fail.
-
-### Manual Publishing
-
-If the CI publish workflow fails (e.g., first publish when the package does not yet exist on GitHub Packages), you can publish manually:
-
-```bash
-npm run publish-package
-# requires NPM_TOKEN for registry.npmjs.org (or be logged in via npm login)
-```
+**`npm run build-package`** installs dev dependencies and builds **`dist/`** (Launch / automation). **`publish-package`** and **`delete-package`** are **no-ops** (exit 0) so Stage0 Launch npm steps always find those scripts; there is no registry publish or package delete for this repo.
 
 ## Testing Requirements
 

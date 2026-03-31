@@ -51,10 +51,9 @@
     "patch": "npm version patch --no-git-tag-version",
     "minor": "npm version minor --no-git-tag-version",
     "major": "npm version major --no-git-tag-version",
-    "build-publish": "npm install --include=dev && npm run build && node scripts/publish-npm.cjs",
     "build-package": "npm install --include=dev && npm run build",
-    "publish-package": "node scripts/publish-npm.cjs",
-    "delete-package": "gh api -X DELETE /orgs/{{org.git_org}}/packages/npm/{{info.slug}}_spa_utils"
+    "publish-package": "node -e \"process.exit(0)\"",
+    "delete-package": "node -e \"process.exit(0)\""
   },
   "dependencies": {
     "@tanstack/vue-query": "^5.0.0",
@@ -87,9 +86,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/{{org.git_org}}/{{info.slug}}_spa_utils.git"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "public"
   }
 }

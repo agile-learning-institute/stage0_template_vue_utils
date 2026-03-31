@@ -34,21 +34,7 @@ Pin a **branch**, **tag**, or **commit** instead of `main` when you want stabili
 
 After clone, npm runs the **`prepare`** script here, which builds **`dist/`** (this repo does not commit `dist`). **Private** `mentorhub_spa_utils` needs git credentials (e.g. **`GITHUB_TOKEN`** in Docker, or `gh auth setup-git` locally).
 
-### Optional: GitHub Packages (semver)
-
-You can still **`npm publish`** to **`npm.pkg.github.com`** (`npm run publish-package`) for consumers that prefer registry versions. That path needs `.npmrc` scope + token to **install**, and **Manage Actions access** per consumer repo if using **`GITHUB_TOKEN`**—see [Publishing](#publishing) below.
-
-## Publishing (optional registry)
-
-**`npm run build-package`**, **`build-publish`**, and **`npm run publish-package`** exist so organizations that ship internal packages to a registry (GitHub Packages today; **JFrog Artifactory** or similar for npm as a planned consolidation) can reuse the same automation. Daily work on this library often never runs those scripts—they are optional unless you are publishing an artifact.
-
-`make publish-package` / **`npm run publish-package`** can push a semver package to **`npm.pkg.github.com`** for teams that want registry installs. Default SPA consumers often **install from git** so CI does not require package-level **Manage Actions access**.
-
-`scripts/publish-npm.cjs` writes a **short-lived** `.npmrc.publish` (gitignored), runs **`npm publish`**, then deletes it.
-
-- **Token:** **`NODE_AUTH_TOKEN`** or **`GITHUB_TOKEN`** with **`write:packages`**.
-- **GitHub Actions:** job needs **`packages: write`**; **`NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}`** on the publish step.
-- **Consumers of the npm package:** each repo may need **Package settings → Manage Actions access** (or a PAT) for GPR—prefer **git dependencies** where that friction matters. **Future direction:** managed registries (**JFrog** for npm and PyPI alongside third-party mirrors) as the primary way to pull internal and audited dependencies.
+For **Stage0 Launch** / umbrella automation: **`npm run build-package`** installs dev deps and builds **`dist/`**. **`npm run publish-package`** and **`npm run delete-package`** exist as **no-ops** so Launch scripts that invoke `make`/npm targets still succeed; this library is consumed via **git**, not an npm registry.
 
 ## Usage
 
