@@ -91,13 +91,13 @@ describe('Navigation & Routing', () => {
       cy.contains('spa_utils Component Testing', { timeout: 10000 }).should('be.visible')
     })
     
-    it('should logout and redirect to login', () => {
+    it('should logout and return to public entry', () => {
       cy.get('[data-automation-id="nav-drawer-toggle"]').click()
       cy.get('.v-navigation-drawer', { timeout: 5000 }).should('be.visible')
       cy.get('[data-automation-id="nav-logout-link"]', { timeout: 5000 })
         .should('be.visible')
         .click()
-      cy.url({ timeout: 5000 }).should('include', '/login')
+      cy.location('pathname', { timeout: 5000 }).should('eq', '/')
       
       // Verify localStorage is cleared
       cy.window().then((win) => {
@@ -106,9 +106,9 @@ describe('Navigation & Routing', () => {
         expect(win.localStorage.getItem('user_roles')).to.be.null
       })
       
-      // Should redirect to login if trying to access protected route
       cy.visit('/demo')
-      cy.url({ timeout: 5000 }).should('include', '/login')
+      cy.location('pathname', { timeout: 5000 }).should('eq', '/')
+      cy.url().should('include', 'redirect=/demo')
     })
   })
   
@@ -124,8 +124,7 @@ describe('Navigation & Routing', () => {
         }
       })
       
-      // Should redirect to login when token is expired
-      cy.url({ timeout: 5000 }).should('include', '/login')
+      cy.location('pathname', { timeout: 5000 }).should('eq', '/')
     })
   })
 })

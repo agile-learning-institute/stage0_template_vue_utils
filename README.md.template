@@ -38,23 +38,25 @@ After clone, npm runs the **`prepare`** script here, which builds **`dist/`** (t
 
 You can still **`npm publish`** to **`npm.pkg.github.com`** (`npm run publish-package`) for consumers that prefer registry versions. That path needs `.npmrc` scope + token to **install**, and **Manage Actions access** per consumer repo if using **`GITHUB_TOKEN`**—see [Publishing](#publishing) below.
 
-## Publishing (optional GitHub Packages)
+## Publishing (optional registry)
 
-`make publish-package` / **`npm run publish-package`** pushes a semver package to **`npm.pkg.github.com`** for teams that want registry installs. Default SPA templates **consume via git** instead so CI does not require package-level **Manage Actions access**.
+**`npm run build-package`**, **`build-publish`**, and **`npm run publish-package`** exist so organizations that ship internal packages to a registry (GitHub Packages today; **JFrog Artifactory** or similar for npm as a planned consolidation) can reuse the same automation. Daily work on this library often never runs those scripts—they are optional unless you are publishing an artifact.
+
+`make publish-package` / **`npm run publish-package`** can push a semver package to **`npm.pkg.github.com`** for teams that want registry installs. Default SPA consumers often **install from git** so CI does not require package-level **Manage Actions access**.
 
 `scripts/publish-npm.cjs` writes a **short-lived** `.npmrc.publish` (gitignored), runs **`npm publish`**, then deletes it.
 
 - **Token:** **`NODE_AUTH_TOKEN`** or **`GITHUB_TOKEN`** with **`write:packages`**.
 - **GitHub Actions:** job needs **`packages: write`**; **`NODE_AUTH_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}`** on the publish step.
-- **Consumers of the npm package:** each repo still needs **Package settings → Manage Actions access** (or a PAT) to use **`GITHUB_TOKEN`** against GPR—this is **not** automatable via a supported API; prefer **git dependencies** in templates to avoid that on the free tier.
+- **Consumers of the npm package:** each repo may need **Package settings → Manage Actions access** (or a PAT) for GPR—prefer **git dependencies** where that friction matters. **Future direction:** managed registries (**JFrog** for npm and PyPI alongside third-party mirrors) as the primary way to pull internal and audited dependencies.
 
 ## Usage
 
-For complete working examples, see the [demo app](./demo/) which includes a **sign-in gate**, **navigation drawer** (hamburger), **component demo page**, and **admin (config) page**. The dev server can proxy `/api` to a local api_utils demo; auth uses `bootstrapDevAuthFromUrl` and localStorage, not `/dev-login`.
+For complete working examples, see the [demo app](./demo/) which includes a **public auth entry** (hash / IdP hints), **navigation drawer** (hamburger), **component demo page**, and **admin (config) page**. The dev server can proxy `/api` to a local api_utils demo; auth uses `bootstrapAuthFromUrl` and localStorage (no backend “login API” in the product SPA flow).
 
-### Developer Edition: bootstrap from URL
+### Bootstrap from URL (welcome / IdP callback)
 
-Product SPAs should call **`bootstrapDevAuthFromUrl()` once before the router mounts** (e.g. from `src/initAuth.ts` imported from `main.ts`). It reads `#access_token=...&expires_at=...&roles=...` into the same `localStorage` keys as your auth composable, and handles `?dev_logout=1` for welcome-page logout. See umbrella [SPA standards]({{org.git_host}}/{{org.git_org}}/{{info.slug}}/blob/main/DeveloperEdition/standards/spa_standards.md) and `VITE_IDP_LOGIN_URI` for unauthenticated redirects.
+Product SPAs should call **`bootstrapAuthFromUrl()` once before the router mounts** (e.g. from `src/initAuth.ts` imported from `main.ts`). It reads `#access_token=...&expires_at=...&roles=...` into the same `localStorage` keys as your auth composable, and handles `?clear_stored_auth=1` to clear stored tokens (e.g. welcome-page or embedded flows). See umbrella [SPA standards]({{org.git_host}}/{{org.git_org}}/{{info.slug}}/blob/main/DeveloperEdition/standards/spa_standards.md) and `VITE_IDP_LOGIN_URI` for unauthenticated redirects.
 
 ### Composables
 
@@ -215,7 +217,7 @@ Common validation rules for form fields. Includes `required`, `namePattern` (no 
 
 ## Demo App
 
-For complete working examples, see the [demo app](./demo/) which includes a **sign-in gate**, **navigation drawer** (hamburger), **component demo page**, and **admin (config) page**. The dev server can proxy `/api` to a local api_utils demo; auth uses `bootstrapDevAuthFromUrl` and localStorage, not `/dev-login`.
+For complete working examples, see the [demo app](./demo/) which includes a **public auth entry** (hash / IdP hints), **navigation drawer** (hamburger), **component demo page**, and **admin (config) page**. The dev server can proxy `/api` to a local api_utils demo; auth uses `bootstrapAuthFromUrl` and localStorage (no backend “login API” in the product SPA flow).
 
 ## Contributing
 

@@ -1,4 +1,4 @@
 export * from './date'
 export * from './validation'
 export * from './admin'
-export * from './devAuthBootstrap'
+export * from './urlAuthBootstrap'

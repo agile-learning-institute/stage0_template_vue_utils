@@ -68,6 +68,8 @@ templates:
     merge: true
   - path: "./vite.config.dev.ts"
     merge: true
+  - path: "./cypress/config/jwtDefaults.ts"
+    merge: true
   - path: "./cypress.config.ts"
     merge: true
 

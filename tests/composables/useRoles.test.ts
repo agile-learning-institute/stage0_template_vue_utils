@@ -21,7 +21,7 @@ describe('useRoles', () => {
     expect(hasRole('user').value).toBe(false)
   })
 
-  it('should fallback to config token roles when auth roles not available', () => {
+  it('should use config token roles when auth roles are not available', () => {
     const authProvider: AuthProvider = {
       roles: ref([])
     }

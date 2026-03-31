@@ -1,28 +1,7 @@
-// Custom Cypress commands for spa_utils E2E tests
-// These commands provide reusable, consistent patterns for test setup and interaction
+// Demo-specific Cypress commands. Shared auth: registerAuthCommands (also used by product SPAs).
+import { registerAuthCommands } from './registerAuthCommands'
 
-function seedDemoAuth(win: Window, roles?: string[]) {
-  const exp = new Date()
-  exp.setFullYear(exp.getFullYear() + 1)
-  win.localStorage.setItem('access_token', 'cypress-test-token')
-  win.localStorage.setItem('token_expires_at', exp.toISOString())
-  win.localStorage.setItem('user_roles', JSON.stringify(roles?.length ? roles : ['admin']))
-}
-
-/**
- * Seed localStorage with a valid-looking auth session (no dev-login API).
- *
- * @param roles - Optional array of roles to assign to the user (defaults to ['admin'])
- */
-Cypress.Commands.add('login', (roles?: string[]) => {
-  cy.visit('/', {
-    onBeforeLoad(win) {
-      seedDemoAuth(win, roles)
-    },
-  })
-  cy.url({ timeout: 10000 }).should('not.include', '/login')
-  cy.wait(300)
-})
+registerAuthCommands({ visitPath: '/' })
 
 /**
  * Logout command - logs out via the navigation drawer
@@ -48,7 +27,7 @@ Cypress.Commands.add('logout', () => {
         .scrollIntoView()
         .click({ force: true })
 
-      cy.url({ timeout: 5000 }).should('include', '/login')
+      cy.location('pathname', { timeout: 5000 }).should('eq', '/')
     }
   })
 })
@@ -65,19 +44,12 @@ Cypress.Commands.add('waitForAdminPage', () => {
     .should('be.visible')
 })
 
-Cypress.Commands.add('waitForLoginPage', () => {
-  cy.url({ timeout: 5000 }).should('include', '/login')
-  cy.contains('Sign in required', { timeout: 5000 }).should('be.visible')
-})
-
 declare global {
   namespace Cypress {
     interface Chainable {
-      login(roles?: string[]): Chainable<void>
       logout(): Chainable<void>
       waitForDemoPage(): Chainable<void>
       waitForAdminPage(): Chainable<void>
-      waitForLoginPage(): Chainable<void>
     }
   }
 }

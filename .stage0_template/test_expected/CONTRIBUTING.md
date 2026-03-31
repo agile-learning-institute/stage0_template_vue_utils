@@ -44,16 +44,16 @@ mentorhub_spa_utils/
 ├── src/
 │   ├── composables/     # Reusable composables
 │   ├── components/      # Vue components
-│   ├── utils/           # Utility functions (incl. devAuthBootstrap for DE URL hash)
+│   ├── utils/           # Utility functions (incl. urlAuthBootstrap for URL hash / clear query)
 │   └── index.ts         # Main export
 ├── demo/                # Demo app for testing components
 │   ├── App.vue          # Layout: app bar, nav drawer, router-view
 │   ├── main.ts          # Entry point
-│   ├── bootstrap-auth.ts    # bootstrapDevAuthFromUrl before app
-│   ├── router.ts        # Routes: /login, /demo, /admin
+│   ├── bootstrap-auth.ts    # bootstrapAuthFromUrl before app
+│   ├── router.ts        # Routes: / (public auth hint), /demo, /admin
 │   ├── composables/     # useAuth, useConfig (demo-only)
 │   ├── pages/
-│   │   ├── LoginPage.vue    # Sign-in gate (IdP / hash; no dev-login API)
+│   │   ├── PublicAuthHint.vue  # Unauthenticated entry (IdP / hash; no backend login API)
 │   │   ├── DemoPage.vue     # Component & utility demos
 │   │   └── AdminPage.vue    # Config (api_utils /api/config)
 │   ├── components/      # Admin UI (config tables, token card)
@@ -83,7 +83,7 @@ When adding new utilities, components, or composables:
    - Follow existing test patterns
 
 4. **Add examples to the demo app:**
-   - Add to [demo/pages/DemoPage.vue](./demo/pages/DemoPage.vue) (or AdminPage / LoginPage as appropriate)
+   - Add to [demo/pages/DemoPage.vue](./demo/pages/DemoPage.vue) (or AdminPage / PublicAuthHint as appropriate)
    - This helps users understand how to use your utility
 
 5. **Add E2E tests:**
@@ -138,9 +138,9 @@ npm run publish-package
 
 ## Demo App
 
-The demo app provides a full flow: **sign-in** (localStorage or URL hash via `bootstrapDevAuthFromUrl`) → **component demos** (navigation drawer) → **admin page** (config) when the user has the `admin` role. The dev server may proxy `/api` to an [api_utils](https://github.com/agile-learning-institute/mentorhub_api_utils) demo for config; there is no `/dev-login` proxy.
+The demo app provides a full flow: **sign-in** (localStorage or URL hash via `bootstrapAuthFromUrl`) → **component demos** (navigation drawer) → **admin page** (config) when the user has the `admin` role. The dev server may proxy `/api` to an [api_utils](https://github.com/agile-learning-institute/mentorhub_api_utils) demo for config; SPAs do not use APIs as a credential-issuing login surface.
 
-- **Sign-in:** [demo/pages/LoginPage.vue](./demo/pages/LoginPage.vue) — gate and instructions (uses [demo/bootstrap-auth.ts](./demo/bootstrap-auth.ts))
+- **Unauthenticated entry:** [demo/pages/PublicAuthHint.vue](./demo/pages/PublicAuthHint.vue) — hash / IdP instructions (uses [demo/bootstrap-auth.ts](./demo/bootstrap-auth.ts))
 - **Layout & nav:** [demo/App.vue](./demo/App.vue) — app bar, hamburger, drawer (demo / admin / logout)
 - **Component demos:** [demo/pages/DemoPage.vue](./demo/pages/DemoPage.vue) — AutoSaveField, AutoSaveSelect, ListPageSearch, formatDate, validationRules
 - **Admin (config):** [demo/pages/AdminPage.vue](./demo/pages/AdminPage.vue) — config items, versions, enumerators, token (requires `admin` role)

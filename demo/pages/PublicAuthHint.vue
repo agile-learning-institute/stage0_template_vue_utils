@@ -4,13 +4,13 @@
       <v-col cols="12" sm="10" md="6">
         <v-card>
           <v-card-title class="text-h5 text-center pa-4">
-            Sign in required
+            Authentication required
           </v-card-title>
           <v-card-text class="text-body-1">
             <p class="mb-4">
-              This demo does not call a dev-login API. Use the Developer Edition welcome flow, your
-              IdP, or paste a token via URL hash before loading the app (see
-              <code>bootstrapDevAuthFromUrl</code> in <code>src/utils/devAuthBootstrap.ts</code>).
+              This demo does not call a backend login API. Use the Developer Edition welcome flow,
+              your IdP, or paste a token via URL hash before loading the app (see
+              <code>bootstrapAuthFromUrl</code> in <code>src/utils/urlAuthBootstrap.ts</code>).
             </p>
             <p class="mb-2">Expected hash format:</p>
             <pre
@@ -18,7 +18,7 @@
               data-automation-id="sign-in-hash-hint"
             >#access_token=JWT&amp;expires_at=ISO8601&amp;roles=admin,developer</pre>
             <p v-if="redirectHint" class="mb-4 text-medium-emphasis">
-              After authenticating, you will be sent to: <strong>{{ redirectHint }}</strong>
+              After authenticating: <strong>{{ redirectHint }}</strong>
             </p>
             <v-btn
               color="primary"

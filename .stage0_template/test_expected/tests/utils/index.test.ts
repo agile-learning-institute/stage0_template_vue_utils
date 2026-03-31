@@ -15,10 +15,10 @@ describe('utils/index', () => {
     expect(utils.validationRules.descriptionPattern).toBeDefined()
   })
 
-  it('should export Developer Edition auth bootstrap helpers', () => {
-    expect(utils.bootstrapDevAuthFromUrl).toBeDefined()
-    expect(typeof utils.bootstrapDevAuthFromUrl).toBe('function')
-    expect(utils.clearDevAuthLocalStorage).toBeDefined()
-    expect(typeof utils.clearDevAuthLocalStorage).toBe('function')
+  it('should export URL auth bootstrap helpers', () => {
+    expect(utils.bootstrapAuthFromUrl).toBeDefined()
+    expect(typeof utils.bootstrapAuthFromUrl).toBe('function')
+    expect(utils.clearUrlSeededAuthLocalStorage).toBeDefined()
+    expect(typeof utils.clearUrlSeededAuthLocalStorage).toBe('function')
   })
 })

@@ -78,6 +78,6 @@ onMounted(async () => {
 function handleLogout() {
   logout()
   drawer.value = false
-  router.push('/login')
+  router.push('/')
 }
 </script>

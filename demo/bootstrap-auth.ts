@@ -1,3 +1,3 @@
-import { bootstrapDevAuthFromUrl } from '../src/utils/devAuthBootstrap'
+import { bootstrapAuthFromUrl } from '../src/utils/urlAuthBootstrap'
 
-bootstrapDevAuthFromUrl()
+bootstrapAuthFromUrl()
