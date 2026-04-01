@@ -6,6 +6,6 @@ export function e2eDefaultJwtSecret(): string {
   return (
     process.env.JWT_SECRET ??
     process.env.CYPRESS_JWT_SECRET ??
-    'mentorhub-local-dev-jwt-secret-fixed'
+    'local-dev-jwt-secret-fixed'
   )
 }

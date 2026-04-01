@@ -6,6 +6,6 @@ export function e2eDefaultJwtSecret(): string {
   return (
     process.env.JWT_SECRET ??
     process.env.CYPRESS_JWT_SECRET ??
-    '{{ info.slug }}-local-dev-jwt-secret-fixed'
+    'local-dev-jwt-secret-fixed'
   )
 }
