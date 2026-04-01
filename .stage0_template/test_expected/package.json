@@ -2,6 +2,9 @@
   "name": "@agile-learning-institute/mentorhub_spa_utils",
   "version": "0.1.0",
   "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "description": "Reusable Vue 3 + Vuetify components, composables, and utilities",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -71,7 +74,7 @@
     "@vue/test-utils": "^2.4.6",
     "concurrently": "^9.1.0",
     "cypress": "^15.8.0",
-    "jsdom": "^25.0.1",
+    "jsdom": "^29.0.1",
     "pinia": "^2.2.6",
     "typescript": "^5.9.2",
     "vite": "^7.2.0",

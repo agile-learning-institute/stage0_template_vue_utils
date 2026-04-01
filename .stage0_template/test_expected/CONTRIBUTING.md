@@ -6,6 +6,7 @@ Thank you for contributing to mentorhub_spa_utils! This guide will help you get 
 
 ### Prerequisites
 
+- **Node.js 24+** (see `package.json` `engines`)
 - Mentor Hub [Developers Edition](https://github.com/agile-learning-institute/mentorhub/blob/main/CONTRIBUTING.md)
 
 ### Getting Started
