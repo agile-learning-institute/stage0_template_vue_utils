@@ -6,6 +6,7 @@ Thank you for contributing to {{ info.slug }}_spa_utils! This guide will help yo
 
 ### Prerequisites
 
+- **Node.js 24+** (see `package.json` `engines`)
 - {{ info.name }} [Developers Edition]({{ org.git_host }}/{{ org.git_org }}/{{ info.slug }}/blob/main/CONTRIBUTING.md)
 
 ### Getting Started

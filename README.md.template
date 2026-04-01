@@ -4,6 +4,8 @@ Reusable Vue 3 + Vuetify components, composables, and utilities for **`{{ info.s
 
 This package follows the same pattern as `api_utils`, providing shared functionality across all SPA projects in the {{info.name}} ecosystem.
 
+**Prerequisites:** Node.js **24+** (see `package.json` `engines`).
+
 ## Installation
 
 ### Development (Editable Mode)
