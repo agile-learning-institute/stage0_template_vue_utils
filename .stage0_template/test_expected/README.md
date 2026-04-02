@@ -2,41 +2,9 @@
 
 Reusable Vue 3 + Vuetify components, composables, and utilities for **`mentorhub_spa_utils`** and other Mentor Hub SPAs.
 
-This package follows the same pattern as `api_utils`, providing shared functionality across all SPA projects in the Mentor Hub ecosystem.
-
-**Prerequisites:** Node.js **24+** (see `package.json` `engines`).
-
-## Installation
-
-### Development (Editable Mode)
-
-When working on both `spa_utils` and a consuming project simultaneously:
-
-```json
-{
-  "dependencies": {
-    "@agile-learning-institute/mentorhub_spa_utils": "file:../mentorhub_spa_utils"
-  }
-}
-```
-
-### Production (recommended: git dependency)
-
-Stage0 SPA templates install this library from **Git** (see `template_vue_vuetify` / `template_vue_phaser`). In `package.json`:
-
-```json
-{
-  "dependencies": {
-    "@agile-learning-institute/mentorhub_spa_utils": "github:agile-learning-institute/mentorhub_spa_utils#main"
-  }
-}
-```
-
-Pin a **branch**, **tag**, or **commit** instead of `main` when you want stability. There is no `^` semver range for git installs.
-
-After clone, npm runs the **`prepare`** script here, which builds **`dist/`** (this repo does not commit `dist`). **Private** `mentorhub_spa_utils` needs git credentials (e.g. **`GITHUB_TOKEN`** in Docker, or `gh auth setup-git` locally).
-
-For **Stage0 Launch** / umbrella automation: **`npm run build-package`** installs dev deps and builds **`dist/`**. **`npm run publish-package`** and **`npm run delete-package`** exist as **no-ops** so Launch scripts that invoke `make`/npm targets still succeed; this library is consumed via **git**, not an npm registry.
+## Prerequisites
+- Mentor Hub [Developers Edition](https://github.com/agile-learning-institute/mentorhub/blob/main/CONTRIBUTING.md)
+- Developer [SPA Standard Prerequisites](https://github.com/agile-learning-institute/mentorhub/blob/main/DeveloperEdition/standards/spa_standards.md)
 
 ## Usage
 
