@@ -21,4 +21,13 @@ describe('utils/index', () => {
     expect(utils.clearUrlSeededAuthLocalStorage).toBeDefined()
     expect(typeof utils.clearUrlSeededAuthLocalStorage).toBe('function')
   })
+
+  it('should export IdP redirect helpers', () => {
+    expect(utils.getIdpLoginBaseUrl).toBeDefined()
+    expect(typeof utils.getIdpLoginBaseUrl).toBe('function')
+    expect(utils.buildIdpLoginRedirectUrl).toBeDefined()
+    expect(typeof utils.buildIdpLoginRedirectUrl).toBe('function')
+    expect(utils.redirectToIdpLogin).toBeDefined()
+    expect(typeof utils.redirectToIdpLogin).toBe('function')
+  })
 })
